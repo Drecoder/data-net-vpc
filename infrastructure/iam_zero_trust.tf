@@ -16,7 +16,7 @@ resource "google_iam_workload_identity_pool_provider" "github_provider" {
     "attribute.actor"      = "assertion.actor"
   }
 
-  attribute_condition = "assertion.repository_owner == 'drecoder'"
+  attribute_condition = "assertion.repository_owner == 'Drecoder'"
 
   oidc {
     issuer_uri = "https://token.actions.githubusercontent.com"
