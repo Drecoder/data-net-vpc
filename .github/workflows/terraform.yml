@@ -22,37 +22,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # FIXED: Proper indentation for the debug step
-      - name: DEBUG - Show OIDC Token Claims
-        run: |
-          echo "Fetching OIDC token from GitHub..."
-          TOKEN_RESPONSE=$(curl -s -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
-            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=https://github.com/Drecoder/data-net-vpc")
-          
-          echo "=== FULL TOKEN RESPONSE ==="
-          echo "$TOKEN_RESPONSE" | jq '.'
-          echo "============================"
-          
-          # Decode the JWT payload
-          JWT=$(echo "$TOKEN_RESPONSE" | jq -r '.value')
-          if [ "$JWT" != "null" ] && [ -n "$JWT" ]; then
-            PAYLOAD=$(echo "$JWT" | cut -d. -f2 | base64 -d 2>/dev/null)
-            echo "=== DECODED PAYLOAD ==="
-            echo "$PAYLOAD" | jq '.'
-            echo "========================"
-            
-            # Extract critical values
-            echo "=== KEY VALUES FOR YOUR CONDITION ==="
-            echo "repository: $(echo "$PAYLOAD" | jq -r '.repository')"
-            echo "repository_id: $(echo "$PAYLOAD" | jq -r '.repository_id')"
-            echo "repository_owner: $(echo "$PAYLOAD" | jq -r '.repository_owner')"
-            echo "repository_owner_id: $(echo "$PAYLOAD" | jq -r '.repository_owner_id')"
-            echo "sub: $(echo "$PAYLOAD" | jq -r '.sub')"
-            echo "======================================"
-          else
-            echo "Failed to get JWT token"
-          fi
-
       - name: Authenticate to Google Cloud
         id: auth
         uses: google-github-actions/auth@v2
