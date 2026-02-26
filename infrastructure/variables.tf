@@ -1,0 +1,36 @@
+variable "project_id" {
+  type        = string
+  description = "GCP project ID"
+}
+
+variable "region" {
+  type        = string
+  default     = "us-central1"
+  description = "GCP region to deploy resources"
+}
+
+variable "environment" {
+  type        = string
+  description = "Environment name, e.g., dev or prod"
+}
+
+variable "cloud_run_service_name" {
+  type        = string
+  description = "Name of the Cloud Run service to monitor"
+}
+
+variable "cpu_threshold" {
+  type        = number
+  description = "CPU utilization threshold (%) to trigger alert"
+}
+
+variable "memory_threshold" {
+  type        = number
+  description = "Memory utilization threshold (%) to trigger alert"
+}
+
+variable "notification_email" {
+  type        = string
+  default     = null
+  description = "Optional email address for alert notifications"
+}
