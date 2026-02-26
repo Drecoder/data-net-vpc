@@ -34,7 +34,7 @@ module "monitoring" {
   cloud_run_service_id   = module.compute.cloud_run_service_id
 }
 
-# This resource is for testing Checkov security gates ...
+# This resource is for testing Checkov security gates 
 resource "google_storage_bucket" "insecure_test_bucket" {
   name                        = "${var.project_id}-insecure-test"
   location                    = "US"
