@@ -32,3 +32,8 @@ variable "memory_threshold" {
   default     = 80
   description = "Memory utilization % to trigger an alert"
 }
+
+variable "cloud_run_service_id" {
+  description = "ID of the Cloud Run service to wait for before creating alerts"
+  type        = string
+}

@@ -1,4 +1,3 @@
-
 module "network" {
   source      = "./modules/network"
   project_id  = var.project_id
@@ -10,16 +9,6 @@ module "iam" {
   source      = "./modules/iam"
   project_id  = var.project_id
   environment = var.environment
-}
-
-module "monitoring" {
-  source                 = "./modules/monitoring"
-  project_id             = var.project_id
-  environment            = var.environment
-  cloud_run_service_name = var.cloud_run_service_name
-  cpu_threshold          = var.cpu_threshold
-  memory_threshold       = var.memory_threshold
-  notification_email     = var.notification_email
 }
 
 module "compute" {
@@ -34,11 +23,23 @@ module "compute" {
   max_instances = 3
 }
 
+module "monitoring" {
+  source                 = "./modules/monitoring"
+  project_id             = var.project_id
+  environment            = var.environment
+  cloud_run_service_name = var.cloud_run_service_name
+  cpu_threshold          = var.cpu_threshold
+  memory_threshold       = var.memory_threshold
+  notification_email     = var.notification_email
+  cloud_run_service_id   = module.compute.cloud_run_service_id
+}
+
 # This resource is for testing Checkov security gates ...
 resource "google_storage_bucket" "insecure_test_bucket" {
-  name          = "${var.project_id}-insecure-test"
-  location      = "US"
-  force_destroy = true
+  name                        = "${var.project_id}-insecure-test"
+  location                    = "US"
+  uniform_bucket_level_access = true
+  force_destroy               = true
 
   # CHECKOV TRIGGER: Missing 'public_access_prevention' 
   # CHECKOV TRIGGER: Missing 'uniform_bucket_level_access'

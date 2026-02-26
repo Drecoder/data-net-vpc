@@ -7,3 +7,7 @@ output "service_name" {
   description = "Cloud Run service name"
   value       = google_cloud_run_service.demo.name
 }
+
+output "cloud_run_service_id" {
+  value = google_cloud_run_service.demo.id  
+}

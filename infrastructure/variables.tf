@@ -34,3 +34,8 @@ variable "notification_email" {
   default     = null
   description = "Optional email address for alert notifications"
 }
+
+variable "cloud_run_service_id" {
+  description = "ID of the Cloud Run service to wait for before creating alerts"
+  type        = string
+}
