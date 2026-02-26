@@ -71,5 +71,5 @@ resource "google_monitoring_alert_policy" "cloud_run_memory" {
 
   notification_channels = var.notification_email != null ? [google_monitoring_notification_channel.email[0].name] : []
   enabled               = true
-}
+}..
 */
