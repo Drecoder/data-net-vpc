@@ -34,7 +34,7 @@ module "compute" {
   max_instances = 3
 }
 
-# This resource is for testing Checkov security gates
+# This resource is for testing Checkov security gates ...
 resource "google_storage_bucket" "insecure_test_bucket" {
   name          = "${var.project_id}-insecure-test"
   location      = "US"
