@@ -29,5 +29,6 @@ resource "google_service_account_iam_member" "wif_binding" {
   role               = "roles/iam.workloadIdentityUser"
 
   # IMPORTANT: Replace YOUR_USERNAME/YOUR_REPO with your actual GitHub info
-  member = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.github_pool.name}/attribute.repository/YOUR_USERNAME/YOUR_REPO"
+ member = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.github_pool.name}/attribute.repository/Drecoder/data-net-vpc"
+
 }
