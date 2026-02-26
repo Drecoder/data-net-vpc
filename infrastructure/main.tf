@@ -45,6 +45,10 @@ resource "google_storage_bucket" "audit_log_sink" {
     enabled = true
   }
 
+ logging {
+    log_bucket = google_storage_bucket.audit_log_sink_logs.name
+  }
+  
   lifecycle {
     prevent_destroy = true
   }
