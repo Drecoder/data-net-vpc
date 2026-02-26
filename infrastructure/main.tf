@@ -17,6 +17,7 @@ module "compute" {
   region      = var.region
   environment = var.environment
 
+  invoker_sa = google_service_account.invoker.email
   service_account_email = module.iam.service_account_email
 
   min_instances = 0
@@ -34,13 +35,8 @@ module "monitoring" {
   cloud_run_service_id   = module.compute.cloud_run_service_id
 }
 
-# This resource is for testing Checkov security gates 
-resource "google_storage_bucket" "insecure_test_bucket" {
-  name                        = "${var.project_id}-insecure-test"
+resource "google_storage_bucket" "logging_bucket" {
+  name                        = "${var.project_id}-logs"
   location                    = "US"
   uniform_bucket_level_access = true
-  force_destroy               = true
-
-  # CHECKOV TRIGGER: Missing 'public_access_prevention' 
-  # CHECKOV TRIGGER: Missing 'uniform_bucket_level_access'
 }

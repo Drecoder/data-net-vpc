@@ -39,3 +39,8 @@ variable "environment_variables" {
   type    = map(string)
   default = {}
 }
+
+variable "invoker_sa" {
+  description = "Service account allowed to invoke the Cloud Run service"
+  type        = string
+}

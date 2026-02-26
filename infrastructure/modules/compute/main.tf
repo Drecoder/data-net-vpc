@@ -42,10 +42,9 @@ resource "google_cloud_run_service" "demo" {
   }
 }
 
-# This part is already perfect!
-resource "google_cloud_run_service_iam_member" "public_invoker" {
+resource "google_cloud_run_service_iam_member" "invoker" {
   service  = google_cloud_run_service.demo.name
   location = var.region
   role     = "roles/run.invoker"
-  member   = "allUsers"
+  member   = "serviceAccount:${var.invoker_sa}"
 }

@@ -16,7 +16,7 @@ resource "google_iam_workload_identity_pool_provider" "github_provider" {
     "attribute.actor"      = "assertion.actor"
   }
 
-  attribute_condition = "assertion.repository_owner == 'Drecoder'"
+  attribute_condition = "assertion.repository == 'Drecoder/data-net-vpc' && assertion.ref == 'refs/heads/main'"
 
   oidc {
     issuer_uri = "https://token.actions.githubusercontent.com"
@@ -29,6 +29,6 @@ resource "google_service_account_iam_member" "wif_binding" {
   role               = "roles/iam.workloadIdentityUser"
 
   # IMPORTANT: Replace YOUR_USERNAME/YOUR_REPO with your actual GitHub info
- member = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.github_pool.name}/attribute.repository/Drecoder/data-net-vpc"
+  member = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.github_pool.name}/attribute.repository/Drecoder/data-net-vpc"
 
 }
