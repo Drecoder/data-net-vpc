@@ -44,3 +44,8 @@ variable "invoker_sa" {
   description = "Service account allowed to invoke the Cloud Run service"
   type        = string
 }
+
+variable "logs_archive_bucket" {
+  description = "Name of the central logs archive bucket for audit logging"
+  type        = string
+}

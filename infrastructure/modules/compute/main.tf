@@ -48,3 +48,18 @@ resource "google_cloud_run_service_iam_member" "invoker" {
   role     = "roles/run.invoker"
   member   = "serviceAccount:${var.invoker_sa}"
 }
+
+resource "google_storage_bucket" "audit_log_sink_logs" {
+  name                        = "${var.project_id}-audit-log-access-logs"
+  location                    = "US"
+  uniform_bucket_level_access = true
+  public_access_prevention    = "enforced"
+  
+  versioning {
+    enabled = true
+  }
+
+  logging {
+    log_bucket = var.logs_archive_bucket
+  }
+}

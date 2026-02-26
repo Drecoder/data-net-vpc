@@ -18,3 +18,9 @@ provider "google" {
   project = var.project_id
   region  = var.region
 }
+
+variable "github_org" {
+  description = "GitHub organization name for OIDC configuration"
+  type        = string
+  default     = "Drecoder" # Set your default
+}
