@@ -16,7 +16,12 @@ resource "google_iam_workload_identity_pool_provider" "github_provider" {
     "attribute.actor"      = "assertion.actor"
   }
 
-  attribute_condition = "assertion.repository == 'Drecoder/data-net-vpc' && assertion.repository_owner == 'Drecoder' && assertion.ref == 'refs/heads/main'"
+  attribute_condition = <<-EOT
+assertion.repository == "Drecoder/data-net-vpc" &&
+assertion.repository_owner == "Drecoder" &&
+assertion.ref == "refs/heads/main"
+EOT
+
 
   oidc {
     issuer_uri = "https://token.actions.githubusercontent.com"
