@@ -25,12 +25,7 @@ resource "google_iam_workload_identity_pool_provider" "github_provider" {
 
 
 
-  attribute_condition = <<-EOT
-assertion.repository == "Drecoder/data-net-vpc" &&
-assertion.repository_owner == "Drecoder" &&
-assertion.ref == "refs/heads/main" &&
-assertion.aud == "https://github.com/Drecoder/data-net-vpc"
-EOT
+  attribute_condition = "assertion.sub == 'repo:Drecoder/data-net-vpc'"
 
 
   oidc {
