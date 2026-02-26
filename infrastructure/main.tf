@@ -17,7 +17,7 @@ module "compute" {
   region      = var.region
   environment = var.environment
 
-  invoker_sa            = google_service_account.invoker.email
+  invoker_sa            = module.iam.invoker_sa_email
   service_account_email = module.iam.service_account_email
 
   min_instances = 0
@@ -35,24 +35,33 @@ module "monitoring" {
   cloud_run_service_id   = module.compute.cloud_run_service_id
 }
 
+resource "google_storage_bucket" "audit_log_sink" {
+  name                        = "${var.project_id}-security-audit-sink"
+  location                    = "US"
+  uniform_bucket_level_access = true
+  public_access_prevention    = "enforced"
+
+  versioning {
+    enabled = true
+  }
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
 resource "google_storage_bucket" "logging_bucket" {
   name                        = "${var.project_id}-logs"
   location                    = "US"
   uniform_bucket_level_access = true
-
-  public_access_prevention = "enforced"
+  public_access_prevention    = "enforced"
 
   versioning {
     enabled = true
   }
 
   logging {
-    log_bucket        = google_storage_bucket.logging_bucket.name
-    log_object_prefix = "access-logs"
+    log_bucket        = google_storage_bucket.audit_log_sink.name
+    log_object_prefix = "access-logs/"
   }
-}
-
-resource "google_service_account" "invoker" {
-  account_id   = "cloud-run-invoker"
-  display_name = "Cloud Run Invoker"
 }

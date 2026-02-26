@@ -12,3 +12,13 @@ resource "google_project_iam_member" "demo_roles" {
   role    = each.value
   member  = "serviceAccount:${google_service_account.demo.email}"
 }
+
+resource "google_service_account" "invoker" {
+  account_id   = "cloud-run-invoker-${var.environment}"
+  display_name = "Cloud Run Invoker"
+}
+
+
+output "invoker_sa_email" {
+  value = google_service_account.invoker.email
+}
