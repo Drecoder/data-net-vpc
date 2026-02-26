@@ -11,12 +11,14 @@ resource "google_iam_workload_identity_pool_provider" "github_provider" {
   workload_identity_pool_provider_id = "github-provider"
 
   attribute_mapping = {
-    "google.subject"             = "assertion.sub"
-    "attribute.repository"       = "assertion.repository"
-    "attribute.repository_owner" = "assertion.repository_owner"
-    "attribute.ref"              = "assertion.ref"
-    "attribute.actor"            = "assertion.actor"
-  }
+  "google.subject"             = "assertion.sub"
+  "attribute.repository"       = "assertion.repository"
+  "attribute.repository_owner" = "assertion.repository_owner"
+  "attribute.ref"              = "assertion.ref"
+  "attribute.actor"            = "assertion.actor"
+  "attribute.aud"              = "assertion.aud"
+}
+
 
 
   attribute_condition = <<-EOT
